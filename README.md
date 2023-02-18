@@ -1,92 +1,197 @@
-# pizzeria
+# SAE S4.A02.1 : Web Backend 
+Thomas Dujardin & Simon Barbeau
+## Création d'une API REST pour une pizzeria 
+
+# A : Ingredients
+
+1) On crée une table ingredients
+
+    ```sql
+    CREATE TABLE ingredients(
+        id int PRIMARY KEY, 
+        name varchar(50)
+    );
+
+    INSERT INTO ingredients VALUES (1,'pomme de terre');
+    INSERT INTO ingredients VALUES (2,'poivrons');
+    INSERT INTO ingredients VALUES (3,'poulet');
+    INSERT INTO ingredients VALUES (4,'lardons');
+    INSERT INTO ingredients VALUES (5,'oignon');
+    INSERT INTO ingredients VALUES (6,'champignons');
+    INSERT INTO ingredients VALUES (7,'mozzarella');
+    INSERT INTO ingredients VALUES (8,'compté');
+    INSERT INTO ingredients VALUES (9,'cheddar');
+    INSERT INTO ingredients VALUES (10,'gorgonzola');
+    INSERT INTO ingredients VALUES (11,'reblochon');
+
+    ```
+
+2) DTO = un pojo de l'ingredient (réel -> objet java)
+
+3) DAO = manager des pojos depuis la base de donnée (CRUD : creer, read, update and delete)
+
+4) CONTROLEUR = 
+    - get 
+        - ingredients = retourne liste de toute la collection
+        - ingredients/id = retourne ingrédient identifié
+        - ingredients/id/name 
+
+    - post 
+        - ingredients = ajouter un ingredient
+
+    - delete
+        - ingredients/id = supprime ingredient
 
 
 
-## Getting started
+# B : Pizzas
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+1) On crée une table pizza 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+    ```sql
+    CREATE TABLE pizzas(
+        id int PRIMARY KEY , 
+        name varchar(50), 
+        description varchar(100),
+        prix decimal(10,2)
+    );
+    
+    INSERT INTO pizzas VALUES (1,'4 fromages', 8.80);
+    INSERT INTO pizzas VALUES (2,'tartiflette', 8.80);
+    INSERT INTO pizzas VALUES (3,'barbecue', 8.80);
+    ```
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+2) on crée une table pizza-ingredints qui contient des enregistrements qui lient les pizzas aux ingrédients qui les composent (relation many-to-many) (c'est le contenu d'une pizza)
 
-```
-cd existing_repo
-git remote add origin https://gitlab.univ-lille.fr/thomas.dujardin2.etu/pizzeria.git
-git branch -M main
-git push -uf origin main
-```
+    ```sql
+    CREATE TABLE pizza_ingredients (
+        pizza_id INT,
+        ingredient_id INT,
+        -- complexifie la chose quantite varchar(10),
+        PRIMARY KEY (pizza_id, ingredient_id),
+        FOREIGN KEY (pizza_id) REFERENCES pizzas(id),
+        FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
+    );
 
-## Integrate with your tools
+    -- POUR LA PIZZA 4 FROMAGES ON AOUTE TOUT LES INGRE UN PAR UN
+    INSERT INTO pizza_ingredients VALUES (1, 7);
+    INSERT INTO pizza_ingredients VALUES (1, 8);
+    INSERT INTO pizza_ingredients VALUES (1, 9);
+    INSERT INTO pizza_ingredients VALUES (1, 10);
 
-- [ ] [Set up project integrations](https://gitlab.univ-lille.fr/thomas.dujardin2.etu/pizzeria/-/settings/integrations)
+    -- POUR LA PIZZA TARTIFLETTE ON AOUTE TOUT LES INGRE UN PAR UN
+    INSERT INTO pizza_ingredients VALUES (2, 1);
+    INSERT INTO pizza_ingredients VALUES (2, 4);
+    INSERT INTO pizza_ingredients VALUES (2, 6);
+    INSERT INTO pizza_ingredients VALUES (2, 11);
 
-## Collaborate with your team
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+    -- POUR LA PIZZA BBQ ON AOUTE TOUT LES INGRE UN PAR UN
+    INSERT INTO pizza_ingredients VALUES (3, 3);
+    INSERT INTO pizza_ingredients VALUES (3, 5);
+    INSERT INTO pizza_ingredients VALUES (3, 8);
 
-## Test and Deploy
+    ```
 
-Use the built-in continuous integration in GitLab.
+    Dans cette table, chaque enregistrement représente la présence d'un ingrédient dans une pizza particulière. 
+    La clé primaire est composée des deux colonnes "pizza_id" et "ingredient_id", qui empêchent les doublons et garantissent que chaque association est unique. Les deux colonnes sont également des clés étrangères qui font référence aux tables "pizzas" et "ingrédients" respectivement, assurant ainsi que seuls les ingrédients et les pizzas existantes peuvent être liés dans la table de jonction.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-***
 
-# Editing this README
+3) DTO = un pojo de la pizza (modèle)
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+4) DAO = manager des pojos depuis la base de donnée (CRUD : creer, read, update and delete)
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+5) CONTROLEUR = 
+    - get 
+        - pizzas = retourne liste de toute la collection
+        - pizzas/id = retourne pizza identifié
 
-## Name
-Choose a self-explaining name for your project.
+            ```sql
+            SELECT pizza.id, pizza.name, pizza.description, pizza.price, ingredient.id, ingredient.name, ingredient.description, ingredient.price, pizza_ingredient.quantity
+            FROM pizza
+            JOIN pizza_ingredient ON pizza.id = pizza_ingredient.pizza_id
+            JOIN ingredient ON pizza_ingredient.ingredient_id = ingredient.id
+            WHERE pizza.id = {id};
+            ```
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+    - post 
+        - pizzas = ajouter une pizza
+        - pizzas/id/addIngredient = ajouter un ingredient à la pizza identifié
+        - pizzas/id/removeIngredient = supprime un ingredient à la pizza identifié
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+    - delete
+        - pizzas/id = supprime pizza
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+    - patch
+        - pizzas/id = modifie attribut de la pizza identifié
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+# C : Commandes
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+1) on crée table des clients
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+    ```sql
+    create table clients (
+        id int PRIMARY KEY,
+        nom varchar(50),
+        adresse varchar(50)
+    );
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+    INSERT INTO clients values (1, 'Thomas', 'Nieppe');
+    INSERT INTO clients values (2, 'Simon', 'Lille');
+    ```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+2) on crée table des commandes
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+    ```sql
+    create table commandes (
+        id int PRIMARY KEY,
+        id_client int,
+        date date,
+        FOREIGN KEY (id_client) REFERENCES clients(id)
+    );
 
-## License
-For open source projects, say how it is licensed.
+    INSERT INTO commandes values (1, 1, 2023-02-18);
+    INSERT INTO commandes values (2, 2, 2023-02-18);
+    ```
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+3) on crée table pizza_commande qui affecte une pizza à une commande (c'est le contenu d'une commande)
+
+    ```sql
+    create table commande_pizza (
+        commandes INT,
+        pizza_id INT,
+        PRIMARY KEY (commandes, pizza_id),
+        FOREIGN KEY (commandes) REFERENCES commandes(id),
+        FOREIGN KEY (pizza_id) REFERENCES pizzas(id)
+    )
+
+     -- POUR LA COMMANDE DE THOMAS
+    INSERT INTO commande_pizza VALUES (1, 1);
+
+     -- POUR LA COMMANDE DE SIMON
+    INSERT INTO commande_pizza VALUES (2, 2);
+    ```
+
+
+- DTO = un pojo d'une commande (modèle)
+- DAO = manager des pojos depuis la base de donnée (CRUD : creer, read, update and delete)
+- CONTROLEUR = 
+    - get 
+        - commandes = retourne liste de toute les commandes en cours
+        - commandes/id = retourne le détail de la commande identifié
+
+    - post 
+        - commandes = ajouter une commande
+
+
+# D : Accès
+
+- DTO = un pojo d'un accès (modèle)
+- DAO = manager des pojos depuis la base de donnée (CRUD : creer, read, update and delete)
+- CONTROLEUR = 
+    - get 
+        - /users/token = récupérer un token d'identification
