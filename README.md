@@ -8,8 +8,8 @@ Thomas Dujardin & Simon Barbeau
 
     ```sql
     CREATE TABLE ingredients(
-        id int PRIMARY KEY, 
-        name varchar(50)
+        idI int PRIMARY KEY, 
+        namei varchar(50)
     );
 
     INSERT INTO ingredients VALUES (1,'pomme de terre');
@@ -50,15 +50,15 @@ Thomas Dujardin & Simon Barbeau
 
     ```sql
     CREATE TABLE pizzas(
-        id int PRIMARY KEY , 
-        name varchar(50), 
-        description varchar(100),
-        prix decimal(10,2)
+        idP int PRIMARY KEY , 
+        nomP varchar(50), 
+        pate varchar(100),
+        prixP decimal(10,2)
     );
     
-    INSERT INTO pizzas VALUES (1,'4 fromages', 8.80);
-    INSERT INTO pizzas VALUES (2,'tartiflette', 8.80);
-    INSERT INTO pizzas VALUES (3,'barbecue', 8.80);
+    INSERT INTO pizzas VALUES (1,'4 fromages', 'new-yorkaise', 8.80);
+    INSERT INTO pizzas VALUES (2,'tartiflette', 'new-yorkaise', 8.80);
+    INSERT INTO pizzas VALUES (3,'barbecue', 'new-yorkaise', 8.80);
     ```
 
 
@@ -70,8 +70,8 @@ Thomas Dujardin & Simon Barbeau
         ingredient_id INT,
         -- complexifie la chose quantite varchar(10),
         PRIMARY KEY (pizza_id, ingredient_id),
-        FOREIGN KEY (pizza_id) REFERENCES pizzas(id),
-        FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
+        FOREIGN KEY (pizza_id) REFERENCES pizzas(idP),
+        FOREIGN KEY (ingredient_id) REFERENCES ingredients(idI)
     );
 
     -- POUR LA PIZZA 4 FROMAGES ON AOUTE TOUT LES INGRE UN PAR UN

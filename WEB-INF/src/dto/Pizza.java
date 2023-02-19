@@ -1,47 +1,83 @@
 package dto;
 
-public class Pizza {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Pizza{
 	
-	private String nom;
+	@JsonProperty
+	private int idP;
+	
+	@JsonProperty
+	private String nomP;
+	
+	@JsonProperty
 	private String pate;
-	private int prix;
 	
-	public Pizza(String nom, String pate, int prix) {
-		super();
-		this.nom = nom;
+	@JsonProperty
+	private double prixP;
+	
+	
+	public Pizza(int idP, String nomP, String pate, double prixP) {
+		this.idP = idP;
+		this.nomP = nomP;
 		this.pate = pate;
-		this.prix = prix;
-	}
-	
-	public Pizza() {	
+		this.prixP = prixP;
 	}
 
-	public String getNom() {
-		return nom;
+
+	public Pizza() {
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+
+	public int getIdP() {
+		return idP;
 	}
+
+
+	public void setIdP(int idP) {
+		this.idP = idP;
+	}
+
+
+	public String getNomP() {
+		return nomP;
+	}
+
+
+	public void setNomP(String nomP) {
+		this.nomP = nomP;
+	}
+
 
 	public String getPate() {
 		return pate;
 	}
 
+
 	public void setPate(String pate) {
 		this.pate = pate;
 	}
 
-	public int getPrix() {
-		return prix;
+
+	public double getPrixP() {
+		return prixP;
 	}
 
-	public void setPrix(int prix) {
-		this.prix = prix;
+
+	public void setPrixP(double prixP) {
+		this.prixP = prixP;
 	}
+
 
 	@Override
 	public String toString() {
-		return "Pizza [nom=" + nom + ", pate=" + pate + ", prix=" + prix + "]";
+		return "Pizza [idP=" + idP + ", nomP=" + nomP + ", pate=" + pate + ", prixP=" + prixP + "]";
 	}
+	
+	
+	
+	
+	
+	
+	
 }

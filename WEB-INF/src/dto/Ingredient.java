@@ -5,34 +5,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Ingredient {
 	
 	@JsonProperty
-	private int id;
+	private int idI;
 	@JsonProperty
-	private String name;
+	private String nameI;
 	
 	public Ingredient(int id, String name) {
-		this.id = id;
-		this.name = name;
+		this.idI = id;
+		this.nameI = name;
 	}
 	
 	public Ingredient() {
 	}
 	
-	public int getId() {
-		return id;
+	public int getIdI() {
+		return idI;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdI(int id) {
+		this.idI = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getNameI() {
+		return nameI;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNameI(String name) {
+		this.nameI = name;
 	}
 	@Override
 	public String toString() {
-		return "Ingredient [id = " + id + ", name = " + name + "]";
+		return "Ingredient [id = " + idI + ", name = " + nameI + "]";
 	}
 	
 }

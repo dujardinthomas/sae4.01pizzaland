@@ -9,23 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.Ingredient;
+import dto.Pizza;
 
-public class IngredientDAO {
+public class PizzaDAO {
 
 
 	private DS ds = new DS();
 	private Connection con;
-	
+
 	//CRUD : CREATE READ UPDATE DELETE
 
-	public boolean createIngredient(Ingredient ingr) throws SQLException{
+	public boolean createPizza(Pizza p) throws SQLException{
 		boolean res = false; //on cree un boolean pour pouvoir fermer la connexion
 		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "insert into ingredients values (?,?)";
+		//	Statement stmt = con.createStatement();
+		String query = "insert into pizzas values (?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, ingr.getIdI());
-		ps.setString(2, ingr.getNameI());
+		ps.setInt(1, p.getIdP());
+		ps.setString(2, p.getNomP());
+		ps.setString(3, p.getPate());
+		ps.setDouble(4, p.getPrixP());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
@@ -37,59 +40,64 @@ public class IngredientDAO {
 	////////////////// READ ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
 
-	public List<Ingredient> findAll() throws SQLException{
+	public List<Pizza> findAll() throws SQLException{
 		con = ds.getConnection();
-		List<Ingredient> ingrAll = new ArrayList<Ingredient>();
+		List<Pizza> pizzaAll = new ArrayList<Pizza>();
 		Statement stmt = con.createStatement();
-		String query = "select * from ingredients";
+		String query = "select * from pizzas";
 		ResultSet rs = stmt.executeQuery(query);
 		while(rs.next()){
-			int id = rs.getInt("idI");
-			String nom = rs.getString("nameI");
-			Ingredient ingrTemp= new Ingredient(id, nom);
-			ingrAll.add(ingrTemp);
+			int idP = rs.getInt("idP");
+			String nomP = rs.getString("nomP");
+			String pate = rs.getString("pate");
+			double prixP = rs.getDouble("prixP");
+
+			pizzaAll.add(new Pizza(idP, nomP, pate, prixP));
 		}
 		try {con.close();} catch(Exception e2) {}
-		return ingrAll;
+		System.out.println(pizzaAll);
+		return pizzaAll;
 	}
 
-	public Ingredient findByIdI(int id) throws SQLException{
-		String query = "select * from ingredients where idI="+id;
+	public Pizza findByIdP(int idP) throws SQLException{
+		String query = "select * from pizzas where idP="+idP;
 		return select(query);
 	}
 
-	public Ingredient findByNameI(String nom) throws SQLException{
-		String query = "select * from ingredients where nameI='" + nom+"'";
+	public Pizza findByNomP(String nomP) throws SQLException{
+		String query = "select * from pizzas where nomP='" + nomP+"'";
 		return select(query);
 	}
 
-	private Ingredient select(String requete) throws SQLException{
-		Ingredient ingr = null;
+	private Pizza select(String requete) throws SQLException{
+		Pizza pizz = null;
 		con = ds.getConnection();
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(requete);
 		if(rs.next()){
-			int id = rs.getInt("idI");
-			String name = rs.getString("nameI");
-			ingr= new Ingredient(id, name);
+			int idP = rs.getInt("idP");
+			String nomP = rs.getString("nomP");
+			String pate = rs.getString("pate");
+			double prixP = rs.getDouble("prixP");
+			pizz = new Pizza(idP, nomP, pate, prixP);
 		}
 		try {con.close();} catch(Exception e2) {}
-		return ingr;
+		return pizz;
 	}
 
 	///////////////////////////////////////////////////////////////
 	////////////////// UPDATE ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
 
-	public boolean updateIngredient(String nomColonne, String newValeur, Ingredient ingr) throws SQLException{
+	public boolean updatePizza(String nomColonne, String newValeur, Pizza pizz) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "update ingredients set ? = ? where ?";
+		//	Statement stmt = con.createStatement();
+		String query = "update pizzas set ? = ? where ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, nomColonne);
 		ps.setString(2, newValeur);
-		ps.setInt(3, ingr.getIdI());
+		ps.setInt(3, pizz.getIdP());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
@@ -102,26 +110,25 @@ public class IngredientDAO {
 	////////////////// DELETE ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
 
-	public boolean deleteIngredient(Ingredient ingr) throws SQLException{
+	public boolean deletePizza(Pizza pizz) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "delete from ingredients where idI = ?";
+		//	Statement stmt = con.createStatement();
+		String query = "delete from pizzas where idP = ?";
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, ingr.getIdI());
+		ps.setInt(1, pizz.getIdP());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
-	
-	
-	public boolean deleteIngredientById(int number) throws SQLException{
+
+	public boolean deletePizzaByIdP(int number) throws SQLException {
 		boolean res=false;
 		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "delete from ingredients where idI = ?";
+		//	Statement stmt = con.createStatement();
+		String query = "delete from pizzas where idP = ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, number);
 		if(ps.executeUpdate() != 0){
@@ -130,7 +137,6 @@ public class IngredientDAO {
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
-
 
 }
 
