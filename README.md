@@ -119,6 +119,13 @@ Thomas Dujardin & Simon Barbeau
     - post 
         - pizzas = ajouter une pizza
         - pizzas/id/addIngredient = ajouter un ingredient à la pizza identifié
+
+
+        On ajoute en 1er l'ingredient dans sa table (on pourrait appeler la méthode doPost de ingredient)
+        on l'ajoute ensuite a la pizza
+
+
+
         - pizzas/id/removeIngredient = supprime un ingredient à la pizza identifié
 
     - delete

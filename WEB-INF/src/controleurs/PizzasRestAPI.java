@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.IngredientDAO;
 import dao.PizzaDAO;
 import dto.Ingredient;
 import dto.Pizza;
@@ -25,6 +26,7 @@ import dto.Pizza;
 @WebServlet("/Pizzas/*")
 public class PizzasRestAPI extends HttpServlet {
 
+	private IngredientDAO ingrDAO = new IngredientDAO();
 	private PizzaDAO pizzDAO = new PizzaDAO();
 
 	@Override
@@ -34,7 +36,7 @@ public class PizzasRestAPI extends HttpServlet {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		String info = req.getPathInfo();
-		String jsonString = null;
+		String jsonString = "hellooo";
 		if(info == null) {
 
 			try {
@@ -46,9 +48,13 @@ public class PizzasRestAPI extends HttpServlet {
 		}
 		else{
 			String[] parts = info.split("/");
-			String param1 = parts[1];
+			String id = parts[1];
+//			String ingredient = parts[2];
 			try {
-				jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(param1)));
+				jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(id)));
+			//	if(!ingredient.isEmpty()) { //on ajoute l'ingredient a la table des ingredients puis dans la pizza
+				//	ingrDAO.createIngredient(null);
+			//	}
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");
 			}

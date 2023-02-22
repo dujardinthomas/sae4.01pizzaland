@@ -15,6 +15,7 @@ public class PizzaDAO {
 
 
 	private DS ds = new DS();
+	private IngredientDAO ingrDAO = new IngredientDAO();
 	private Connection con;
 
 	//CRUD : CREATE READ UPDATE DELETE
@@ -51,8 +52,15 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixP = rs.getDouble("prixP");
-
-			pizzaAll.add(new Pizza(idP, nomP, pate, prixP));
+			
+			List<Ingredient> ingredients = new ArrayList<Ingredient>();
+			Statement stmt1 = con.createStatement();
+			String query1 = "select * from pizza_ingredients where pizza_id=" + idP;
+			ResultSet rs1 = stmt1.executeQuery(query1);
+			while(rs1.next()){
+				ingredients.add(ingrDAO.findByIdI(rs1.getInt("ingredient_id")));
+			}
+			pizzaAll.add(new Pizza(idP, nomP, pate, prixP, ingredients));
 		}
 		try {con.close();} catch(Exception e2) {}
 		System.out.println(pizzaAll);
@@ -79,7 +87,17 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixP = rs.getDouble("prixP");
-			pizz = new Pizza(idP, nomP, pate, prixP);
+			
+			
+			List<Ingredient> ingredients = new ArrayList<Ingredient>();
+			Statement stmt1 = con.createStatement();
+			String query1 = "select * from pizza_ingredients where pizza_id=" + idP;
+			ResultSet rs1 = stmt1.executeQuery(query1);
+			while(rs1.next()){
+				ingredients.add(ingrDAO.findByIdI(rs1.getInt("ingredient_id")));
+			}
+			
+			pizz = new Pizza(idP, nomP, pate, prixP, ingredients);
 		}
 		try {con.close();} catch(Exception e2) {}
 		return pizz;
