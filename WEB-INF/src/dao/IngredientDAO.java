@@ -101,36 +101,25 @@ public class IngredientDAO {
 	///////////////////////////////////////////////////////////////
 	////////////////// DELETE ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
+	
 
-	public boolean deleteIngredient(Ingredient ingr) throws SQLException{
+
+	public boolean deleteIngredientById(int idI) throws SQLException{
+		String query = "delete from ingredients where idI = " + idI;
+		return delete(query);
+	}
+
+	
+	private boolean delete(String req) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "delete from ingredients where idI = ?";
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, ingr.getIdI());
-		if(ps.executeUpdate() != 0){
+		Statement stmt = con.createStatement();
+		if(stmt.executeUpdate(req) != 0){
 			res = true;
 		}
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
-	
-	
-	public boolean deleteIngredientById(int number) throws SQLException{
-		boolean res=false;
-		con = ds.getConnection();
-	//	Statement stmt = con.createStatement();
-		String query = "delete from ingredients where idI = ?";
-		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, number);
-		if(ps.executeUpdate() != 0){
-			res = true;
-		}
-		try {con.close();} catch(Exception e2) {}
-		return res;
-	}
-
 
 }
 

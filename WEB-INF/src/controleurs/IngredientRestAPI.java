@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.IngredientDAO;
 import dto.Ingredient;
 
-@WebServlet("/Ingredients/*")
+@WebServlet("/ingredients/*")
 public class IngredientRestAPI extends HttpServlet {
 
 	private IngredientDAO ingrDAO = new IngredientDAO();
@@ -97,7 +97,10 @@ public class IngredientRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			try {
+				System.out.println("heyy");
+
 				jsonString = objectMapper.writeValueAsString(ingrDAO.deleteIngredientById(Integer.valueOf(param1)));
+				System.out.println("2heyy");
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");
 			}

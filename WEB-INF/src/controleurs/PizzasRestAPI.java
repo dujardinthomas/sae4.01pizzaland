@@ -23,7 +23,7 @@ import dao.PizzaDAO;
 import dto.Ingredient;
 import dto.Pizza;
 
-@WebServlet("/Pizzas/*")
+@WebServlet("/pizzas/*")
 public class PizzasRestAPI extends HttpServlet {
 
 	private IngredientDAO ingrDAO = new IngredientDAO();
