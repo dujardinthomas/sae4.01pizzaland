@@ -158,7 +158,7 @@ Thomas Dujardin & Simon Barbeau
         idCo int PRIMARY KEY,
         client_id int,
         date date,
-        FOREIGN KEY (id_client) REFERENCES clients(idC)
+        FOREIGN KEY (client_id) REFERENCES clients(idC)
     );
 
     INSERT INTO commandes values (1, 1, '2023-02-18');
