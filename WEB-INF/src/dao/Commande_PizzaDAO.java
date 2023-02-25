@@ -46,7 +46,7 @@ public class Commande_PizzaDAO {
 		String query = "select * from commande_pizza where commande_id=" + commande_id;
 		ResultSet rs = stmt.executeQuery(query);
 		while(rs.next()){
-			pizzas.add(pizzDAO.findByIdP(rs.getInt("idP")));
+			pizzas.add(pizzDAO.findByIdP(rs.getInt("pizza_id")));
 		}
 		return pizzas;
 

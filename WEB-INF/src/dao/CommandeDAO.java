@@ -52,7 +52,7 @@ public class CommandeDAO {
 			Commande c = null;
 			con = ds.getConnection();
 			Statement stmt = con.createStatement();
-			String query = "select * from commandes where idc = " + idCo;
+			String query = "select * from commandes where idco = " + idCo;
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
 				int idC = rs.getInt("idCo");
