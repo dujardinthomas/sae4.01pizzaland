@@ -13,9 +13,8 @@ import dto.Pizza;
 
 public class PizzaDAO {
 
-
 	private DS ds = new DS();
-	private IngredientDAO ingrDAO = new IngredientDAO();
+	private Pizza_IngredientsDAO pizza_ingrDAO = new Pizza_IngredientsDAO();
 	private Connection con;
 
 	//CRUD : CREATE READ UPDATE DELETE
@@ -52,29 +51,11 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixP = rs.getDouble("prixP");
-			
-			List<Ingredient> ingredients = new ArrayList<Ingredient>();
-			Statement stmt1 = con.createStatement();
-			String query1 = "select * from pizza_ingredients where pizza_id=" + idP;
-			ResultSet rs1 = stmt1.executeQuery(query1);
-			while(rs1.next()){
-				ingredients.add(ingrDAO.findByIdI(rs1.getInt("ingredient_id")));
-			}
-			pizzaAll.add(new Pizza(idP, nomP, pate, prixP, ingredients));
+			pizzaAll.add(new Pizza(idP, nomP, pate, prixP, pizza_ingrDAO.getIngredientsPizza(idP)));
 		}
 		try {con.close();} catch(Exception e2) {}
 		System.out.println(pizzaAll);
 		return pizzaAll;
-	}
-
-	public Pizza findByIdP(int idP) throws SQLException{
-		String query = "select * from pizzas where idP="+idP;
-		return select(query);
-	}
-
-	public Pizza findByNomP(String nomP) throws SQLException{
-		String query = "select * from pizzas where nomP='" + nomP+"'";
-		return select(query);
 	}
 
 	private Pizza select(String requete) throws SQLException{
@@ -87,21 +68,23 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixP = rs.getDouble("prixP");
-			
-			
-			List<Ingredient> ingredients = new ArrayList<Ingredient>();
-			Statement stmt1 = con.createStatement();
-			String query1 = "select * from pizza_ingredients where pizza_id=" + idP;
-			ResultSet rs1 = stmt1.executeQuery(query1);
-			while(rs1.next()){
-				ingredients.add(ingrDAO.findByIdI(rs1.getInt("ingredient_id")));
-			}
-			
-			pizz = new Pizza(idP, nomP, pate, prixP, ingredients);
+			pizz = new Pizza(idP, nomP, pate, prixP, pizza_ingrDAO.getIngredientsPizza(idP));
 		}
 		try {con.close();} catch(Exception e2) {}
 		return pizz;
 	}
+	
+	public Pizza findByIdP(int idP) throws SQLException{
+		String query = "select * from pizzas where idP="+idP;
+		return select(query);
+	}
+
+	public Pizza findByNomP(String nomP) throws SQLException{
+		String query = "select * from pizzas where nomP='" + nomP+"'";
+		return select(query);
+	}
+
+	
 
 	///////////////////////////////////////////////////////////////
 	////////////////// UPDATE ///////////////////////////////////////

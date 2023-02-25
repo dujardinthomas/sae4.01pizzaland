@@ -138,43 +138,43 @@ Thomas Dujardin & Simon Barbeau
 
 # C : Commandes
 
-1) on crée table des clients
+1) on crée table des clients avec son dto
 
     ```sql
     create table clients (
-        id int PRIMARY KEY,
-        nom varchar(50),
-        adresse varchar(50)
+        idC int PRIMARY KEY,
+        nomC varchar(50),
+        adresseC varchar(50)
     );
 
     INSERT INTO clients values (1, 'Thomas', 'Nieppe');
     INSERT INTO clients values (2, 'Simon', 'Lille');
     ```
 
-2) on crée table des commandes
+2) on crée table des commandes avec son dto (On importe java.sql.Date plutôt que java.util.Date car on garde le format sql (yyyy-mm-dd))
 
     ```sql
     create table commandes (
-        id int PRIMARY KEY,
-        id_client int,
+        idCo int PRIMARY KEY,
+        client_id int,
         date date,
-        FOREIGN KEY (id_client) REFERENCES clients(id)
+        FOREIGN KEY (id_client) REFERENCES clients(idC)
     );
 
-    INSERT INTO commandes values (1, 1, 2023-02-18);
-    INSERT INTO commandes values (2, 2, 2023-02-18);
+    INSERT INTO commandes values (1, 1, '2023-02-18');
+    INSERT INTO commandes values (2, 2, '2023-02-18');
     ```
 
-3) on crée table pizza_commande qui affecte une pizza à une commande (c'est le contenu d'une commande)
+3) on crée table pizza_commande qui affecte une pizza à une commande (c'est le contenu d'une commande) (on ajoute list<Pizza> dans dto de commande)
 
     ```sql
     create table commande_pizza (
-        commandes INT,
+        commande_id INT,
         pizza_id INT,
-        PRIMARY KEY (commandes, pizza_id),
-        FOREIGN KEY (commandes) REFERENCES commandes(id),
-        FOREIGN KEY (pizza_id) REFERENCES pizzas(id)
-    )
+        PRIMARY KEY (commande_id, pizza_id),
+        FOREIGN KEY (commande_id) REFERENCES commandes(idCo),
+        FOREIGN KEY (pizza_id) REFERENCES pizzas(idP)
+    );
 
      -- POUR LA COMMANDE DE THOMAS
     INSERT INTO commande_pizza VALUES (1, 1);
