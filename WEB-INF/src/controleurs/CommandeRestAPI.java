@@ -9,17 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dao.CommandeDAO;
+import dto.Commande;
 
-import dao.IngredientDAO;
-import dto.Ingredient;
+@WebServlet("/commandes/*")
+public class CommandeRestAPI extends HttpServlet {
 
-@WebServlet("/ingredients/*")
-public class IngredientRestAPI extends HttpServlet {
-
-	private IngredientDAO ingrDAO = new IngredientDAO();
+	private CommandeDAO commandeDAO = new CommandeDAO();
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -31,7 +29,7 @@ public class IngredientRestAPI extends HttpServlet {
 		String jsonString = null;
 		if(info == null) {
 			try {
-				jsonString = objectMapper.writeValueAsString(ingrDAO.findAll());
+				jsonString = objectMapper.writeValueAsString(commandeDAO.getAllCommandes());
 			} catch (JsonProcessingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -41,7 +39,7 @@ public class IngredientRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			try {
-				jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(param1)));
+				jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)));
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");
 			}
@@ -64,9 +62,9 @@ public class IngredientRestAPI extends HttpServlet {
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
-		Ingredient newIngredient = mapper.readValue(data.toString(), Ingredient.class);
+		Commande newCommande = mapper.readValue(data.toString(), Commande.class);
 		try {
-			ingrDAO.createIngredient(newIngredient);
+			commandeDAO.createCommande(newCommande);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,7 +92,7 @@ public class IngredientRestAPI extends HttpServlet {
 			try {
 				System.out.println("heyy");
 
-				jsonString = objectMapper.writeValueAsString(ingrDAO.deleteIngredientById(Integer.valueOf(param1)));
+				jsonString = objectMapper.writeValueAsString(commandeDAO.deleteCommandeByIdCo(Integer.valueOf(param1)));
 				System.out.println("2heyy");
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");

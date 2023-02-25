@@ -4,29 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import dao.IngredientDAO;
 import dao.PizzaDAO;
-import dto.Ingredient;
 import dto.Pizza;
 
 @WebServlet("/pizzas/*")
 public class PizzasRestAPI extends HttpServlet {
 
-	private IngredientDAO ingrDAO = new IngredientDAO();
 	private PizzaDAO pizzDAO = new PizzaDAO();
 
 	@Override

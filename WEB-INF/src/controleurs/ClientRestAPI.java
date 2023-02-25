@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dao.IngredientDAO;
-import dto.Ingredient;
+import dao.ClientDAO;
+import dto.Client;
 
-@WebServlet("/ingredients/*")
-public class IngredientRestAPI extends HttpServlet {
+@WebServlet("/clients/*")
+public class ClientRestAPI extends HttpServlet {
 
-	private IngredientDAO ingrDAO = new IngredientDAO();
+	private ClientDAO clienDAO = new ClientDAO();
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class IngredientRestAPI extends HttpServlet {
 		String jsonString = null;
 		if(info == null) {
 			try {
-				jsonString = objectMapper.writeValueAsString(ingrDAO.findAll());
+				jsonString = objectMapper.writeValueAsString(clienDAO.getAllClients());
 			} catch (JsonProcessingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -41,7 +41,7 @@ public class IngredientRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			try {
-				jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(param1)));
+				jsonString = objectMapper.writeValueAsString(clienDAO.getClientByIdC(Integer.valueOf(param1)));
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");
 			}
@@ -64,9 +64,9 @@ public class IngredientRestAPI extends HttpServlet {
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
-		Ingredient newIngredient = mapper.readValue(data.toString(), Ingredient.class);
+		Client newClient = mapper.readValue(data.toString(), Client.class);
 		try {
-			ingrDAO.createIngredient(newIngredient);
+			clienDAO.createClient(newClient);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class IngredientRestAPI extends HttpServlet {
 			try {
 				System.out.println("heyy");
 
-				jsonString = objectMapper.writeValueAsString(ingrDAO.deleteIngredientById(Integer.valueOf(param1)));
+				jsonString = objectMapper.writeValueAsString(clienDAO.deleteClient(Integer.valueOf(param1)));
 				System.out.println("2heyy");
 			}catch (Exception e) {
 				res.sendError(404, " cet objet n'existe pas !");
