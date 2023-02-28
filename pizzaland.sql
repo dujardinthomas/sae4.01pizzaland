@@ -9,21 +9,20 @@ DROP TABLE ingredients;
 
 CREATE TABLE ingredients(
     idI int PRIMARY KEY, 
-    namei varchar(50),
-    prixI decimal(10,2)
+    namei varchar(50)
 );
 
-INSERT INTO ingredients VALUES (1,'pomme de terre', 1.50);
-INSERT INTO ingredients VALUES (2,'poivrons', 1);
-INSERT INTO ingredients VALUES (3,'poulet', 1);
-INSERT INTO ingredients VALUES (4,'lardons', 1);
-INSERT INTO ingredients VALUES (5,'oignon', 1);
-INSERT INTO ingredients VALUES (6,'champignons', 1);
-INSERT INTO ingredients VALUES (7,'mozzarella', 1);
-INSERT INTO ingredients VALUES (8,'compté', 1);
-INSERT INTO ingredients VALUES (9,'cheddar', 1);
-INSERT INTO ingredients VALUES (10,'gorgonzola', 1);
-INSERT INTO ingredients VALUES (11,'reblochon', 1);
+INSERT INTO ingredients VALUES (1,'pomme de terre');
+INSERT INTO ingredients VALUES (2,'poivrons');
+INSERT INTO ingredients VALUES (3,'poulet');
+INSERT INTO ingredients VALUES (4,'lardons');
+INSERT INTO ingredients VALUES (5,'oignon');
+INSERT INTO ingredients VALUES (6,'champignons');
+INSERT INTO ingredients VALUES (7,'mozzarella');
+INSERT INTO ingredients VALUES (8,'compté');
+INSERT INTO ingredients VALUES (9,'cheddar');
+INSERT INTO ingredients VALUES (10,'gorgonzola');
+INSERT INTO ingredients VALUES (11,'reblochon');
 
 
 
