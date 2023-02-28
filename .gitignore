@@ -1,3 +1,4 @@
 /bin/
 WEB-INF/classes
 WEB-INF/src/dao/DS.java
+.classpath
