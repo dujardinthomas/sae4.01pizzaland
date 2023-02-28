@@ -39,7 +39,21 @@ public class PizzasRestAPI extends HttpServlet {
 		else{
 			String[] parts = info.split("/");
 			String id = parts[1];
-//			String ingredient = parts[2];
+			
+			if(parts.length == 3) {
+				if(parts[2].equals("prixfinal")) {
+					try {
+						jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(id)).getPrixFinalP());
+					}catch (Exception e) {
+						res.sendError(404, " cet objet n'existe pas !");
+					}
+				}
+				else {
+					jsonString = null;	
+				}
+			}
+			
+			
 			try {
 				jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(id)));
 			//	if(!ingredient.isEmpty()) { //on ajoute l'ingredient a la table des ingredients puis dans la pizza

@@ -28,7 +28,7 @@ public class PizzaDAO {
 		ps.setInt(1, p.getIdP());
 		ps.setString(2, p.getNomP());
 		ps.setString(3, p.getPate());
-		ps.setDouble(4, p.getPrixP());
+		ps.setDouble(4, p.getPrixBaseP());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
@@ -50,8 +50,8 @@ public class PizzaDAO {
 			int idP = rs.getInt("idP");
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
-			double prixP = rs.getDouble("prixP");
-			pizzaAll.add(new Pizza(idP, nomP, pate, prixP, pizza_ingrDAO.getIngredientsPizza(idP)));
+			double prixBaseP = rs.getDouble("prixBaseP");
+			pizzaAll.add(new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getIngredientsPizza(idP)));
 		}
 		try {con.close();} catch(Exception e2) {}
 		System.out.println(pizzaAll);
@@ -67,8 +67,8 @@ public class PizzaDAO {
 			int idP = rs.getInt("idP");
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
-			double prixP = rs.getDouble("prixP");
-			pizz = new Pizza(idP, nomP, pate, prixP, pizza_ingrDAO.getIngredientsPizza(idP));
+			double prixBaseP = rs.getDouble("prixBaseP");
+			pizz = new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getIngredientsPizza(idP));
 		}
 		try {con.close();} catch(Exception e2) {}
 		return pizz;

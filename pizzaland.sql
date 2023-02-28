@@ -31,7 +31,7 @@ CREATE TABLE pizzas(
     idP int PRIMARY KEY , 
     nomP varchar(50), 
     pate varchar(100),
-    prixP decimal(10,2)
+    prixBaseP decimal(10,2)
 );
 
 INSERT INTO pizzas VALUES (1,'4 fromages', 'new-yorkaise', 8.80);

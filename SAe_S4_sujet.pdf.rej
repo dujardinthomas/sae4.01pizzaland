@@ -1,0 +1,103 @@
+--- SAe_S4_sujet.pdf
++++ SAe_S4_sujet.pdf
+@@ -1,4 +1,4 @@
+-                        SAé S4.A02.1 : Web Backend                                           R2.06 - BDD
++                    SAé S4.A02.1 : Web Backend                                               R2.06 - BDD
+                                                                                            DUT Info – N2
+                                                                                         Philippe Mathieu
+ 
+@@ -25,46 +25,45 @@ DAO, et la connexion à la base de données à un seul endoit.
+ 
+ Partie 1 : Les ingrédients
+ 
+-    On s’interesse tout d’abord aux ingrédients. Il faut bien sûr une table du SGBD pour les stocker, un DTO pour le
+-mapping objet/relationnel et un DAOIngrédient pour assurer les requêtes.
++    On s’interesse tout d’abord aux ingrédients. Les ingrédients sont caractérisés par leur id, leur nom et leur prix. Il
++faut bien sûr une table du SGBD pour les stocker, un DTO pour le mapping objet/relationnel et un DAOIngrédient pour
++assurer les requêtes.
+ 
+ Au minimum, les endpoints suivants doivent être assurés
+ 
+ GET  /ingredients           pour obtenir la collection de tous les ingrédients
+ 
+-GET  /ingredients/id        pour obtenir un ingrédient particulier
++GET  /ingredients/{id}      pour obtenir un ingrédient particulier
+ 
+-GET  /ingredients/id/name pour obtenir uniquement le nom d’un ingrédient spéciﬁque
++GET  /ingredients/{id}/name pour obtenir uniquement le nom d’un ingrédient spéciﬁque
+ 
+ POST /ingredients           pour ajouter un nouvel ingrédient
+ 
+-DELETE /ingredients/id      pour supprimer un ingrédient existant
++DELETE /ingredients/{id}    pour supprimer un ingrédient existant
+ 
+ Les cas d’erreurs doivent bien évidemment être traités.
+ 
+ Partie 2 : Les pizzas
+ 
+-    On s’interesse maintenant aux pizzas. Bien évidemment les pizzas ont un nom, un type de pâte, et sont caractérisées
+-par des ingrédients. Un même ingrédient pouvant être utilisé dans plusieurs types de pizzas.
++    On s’interesse maintenant aux pizzas. Bien évidemment les pizzas ont un nom, un type de pâte, un prixBase et sont
++caractérisées par des ingrédients. Un même ingrédient pouvant être utilisé dans plusieurs types de pizzas. le prix ﬁnal
++d’une pizza est calculé par l’addition du prix de base et la somme des ingrédients qui la composent.
+ 
+-Au minimum, les endpoints suivants doivent être assurés
++    Au minimum, les endpoints suivants doivent être assurés
+ 
+-GET  /pizzas                  pour obtenir la collection de toutes les pizzas
+-
+-GET  /pizzas/id               une pizza en particulier
+-
+-POST /pizzas                  ajout d’une nouvelle pizza avec ses ingrédients
+-
+-DELETE /pizzas/id             suppression d’une pizza
++                                                         1
++GET     /pizzas                      pour obtenir la collection de toutes les pizzas
++GET     /pizzas/{id}                 une pizza en particulier
++POST    /pizzas                      ajout d’une nouvelle pizza avec ses ingrédients
++DELETE  /pizzas/{id}                 suppression d’une pizza
++PATCH   /pizzas/{id}                 modif d’un attribut d’une pizza (le prix augmente)
++POST    /pizzas/{id}                 ajout d’un ingrédient à une pizza
++DELETE  /pizzas/{id}/{idIngredient}  suppression d’un ingrédient d’une pizza
++GET     /pizzas/{id}/prixfinal       fournit le prix ﬁnal de la pizza
+ 
+-PATCH /pizzas/id              modif d’un attribut d’une pizza (le prix augmente)
++GET sur une pizza doit renvoyer la pizza et tous ses ingrédients.
+ 
+-POST /pizza/id/addIngredient  ajout d’un ingréident à une pizza
+-
+-POST /pizza/id/removeIngredient suppression d’un ingrédient à une pizza
+-
+-                                                         1
+-Partie 3 : les commandes
++Partie 3 : les commandes
+ 
+     On s’occupe maintenant de la partie utilisateurs. Un utilisateur peut bien évidemment commander plusieurs pizzas
+ dans sa commande. Chaque commande doit contenir l’identiﬁant de l’utilisateur, la date de commande, et les pizzas
+@@ -73,11 +72,16 @@ On ne s’occupera pas de la gestion des utilisateurs. Ceux ci peuvent être mis
+ 
+ Au minimum, les endpoints suivants doivent être assurés
+ 
+-GET /commandes   liste des commandes en cours
++GET /commandes            liste des commandes en cours
++
++GET /commandes/{id}       le détail d’une commande
++
++POST /commandes           enregistrement d’une nouvelle commande
+ 
+-GET /commandes/id le détail d’une commande
++      GET /commandes/{id}/prixfinal fournit le prix ﬁnal de la commande
+ 
+-POST /commandes  enregistrement d’une nouvelle commande
++    GET sur une commande doit renvoyer la commande avec toutes ses pizzas, elles mêmes contenant tous leurs
++ingrédients
+ 
+ Partie 4 : restrictions d’Accès
+ 
+@@ -89,5 +93,5 @@ token soit vériﬁé partout où c’est necessaire.
+     Au minimum, les endpoints suivants doivent être assurés
+       GET /users/token récupération du token d’authentiﬁcation
+ 
+-                          2
++                                     2
+ 
