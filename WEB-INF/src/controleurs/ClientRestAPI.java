@@ -29,7 +29,7 @@ public class ClientRestAPI extends HttpServlet {
 
 		String info = req.getPathInfo();
 		String jsonString = null;
-		if(info == null) {
+		if(info == null || info.equals("/")) {
 			try {
 				jsonString = objectMapper.writeValueAsString(clienDAO.getAllClients());
 			} catch (JsonProcessingException | SQLException e) {

@@ -29,7 +29,7 @@ public class IngredientRestAPI extends HttpServlet {
 
 		String info = req.getPathInfo();
 		String jsonString = null;
-		if(info == null) {
+		if(info == null || info.equals("/")) {
 			try {
 				jsonString = objectMapper.writeValueAsString(ingrDAO.findAll());
 			} catch (JsonProcessingException | SQLException e) {

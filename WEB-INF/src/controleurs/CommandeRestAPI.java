@@ -27,7 +27,7 @@ public class CommandeRestAPI extends HttpServlet {
 
 		String info = req.getPathInfo();
 		String jsonString = null;
-		if(info == null) {
+		if(info == null || info.equals("/")) {
 			try {
 				jsonString = objectMapper.writeValueAsString(commandeDAO.getAllCommandes());
 			} catch (JsonProcessingException | SQLException e) {

@@ -27,7 +27,7 @@ public class PizzasRestAPI extends HttpServlet {
 
 		String info = req.getPathInfo();
 		String jsonString = "hellooo";
-		if(info == null) {
+		if(info == null || info.equals("/")) {
 
 			try {
 				jsonString = objectMapper.writeValueAsString(pizzDAO.findAll());
