@@ -22,10 +22,11 @@ public class IngredientDAO {
 		boolean res = false; //on cree un boolean pour pouvoir fermer la connexion
 		con = ds.getConnection();
 	//	Statement stmt = con.createStatement();
-		String query = "insert into ingredients values (?,?)";
+		String query = "insert into ingredients values (?,?, ?)";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, ingr.getIdI());
 		ps.setString(2, ingr.getNameI());
+		ps.setDouble(3, ingr.getPrixI());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
@@ -46,7 +47,8 @@ public class IngredientDAO {
 		while(rs.next()){
 			int id = rs.getInt("idI");
 			String nom = rs.getString("nameI");
-			Ingredient ingrTemp= new Ingredient(id, nom);
+			double prix = rs.getDouble("prixI");
+			Ingredient ingrTemp= new Ingredient(id, nom, prix);
 			ingrAll.add(ingrTemp);
 		}
 		try {con.close();} catch(Exception e2) {}
@@ -71,7 +73,8 @@ public class IngredientDAO {
 		if(rs.next()){
 			int id = rs.getInt("idI");
 			String name = rs.getString("nameI");
-			ingr= new Ingredient(id, name);
+			double prix = rs.getDouble("prixI");
+			ingr= new Ingredient(id, name, prix);
 		}
 		try {con.close();} catch(Exception e2) {}
 		return ingr;

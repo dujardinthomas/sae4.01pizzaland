@@ -8,31 +8,48 @@ public class Ingredient {
 	private int idI;
 	@JsonProperty
 	private String nameI;
+	@JsonProperty
+	private double prixI;
 	
-	public Ingredient(int id, String name) {
-		this.idI = id;
-		this.nameI = name;
+	
+	public Ingredient(int idI, String nameI, double prixI) {
+		this.idI = idI;
+		this.nameI = nameI;
+		this.prixI = prixI;
 	}
-	
+
+
 	public Ingredient() {
 	}
-	
+
+
 	public int getIdI() {
 		return idI;
 	}
-	public void setIdI(int id) {
-		this.idI = id;
+
+
+	public void setIdI(int idI) {
+		this.idI = idI;
 	}
-	
+
+
 	public String getNameI() {
 		return nameI;
 	}
-	public void setNameI(String name) {
-		this.nameI = name;
+
+
+	public void setNameI(String nameI) {
+		this.nameI = nameI;
 	}
-	@Override
-	public String toString() {
-		return "Ingredient [id = " + idI + ", name = " + nameI + "]";
+
+
+	public double getPrixI() {
+		return prixI;
+	}
+
+
+	public void setPrixI(double prixI) {
+		this.prixI = prixI;
 	}
 	
 }
