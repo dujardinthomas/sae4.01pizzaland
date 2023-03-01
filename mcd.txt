@@ -1,0 +1,31 @@
+┌──────────┐         ┌──────────┐          ┌─────────────┐         ┌───────────────────┐          ┌───────────────┐
+│ clients  │         │ commandes│          │ pizza_      │         │ commande_pizza    │          │ ingredients   │
+│          │◄───1───┤          │───────n───│ ingredients │───────n───┤                   │───────n──┤               │
+│ idC (PK) │         │ idCo (PK)│          │ pizza_id    │         │ commande_id (PK)  │          │ idI (PK)      │
+│ nomC     │         │ client_id│          │ ingredient_ │         │ pizza_id (PK)     │          │ namei         │
+│ adresseC │         │ date     │          │ id         │         │                   │          │ prixI         │
+└──────────┘         └──────────┘          └─────────────┘         └───────────────────┘          └───────────────┘
+                                                      ▲                ▲                       ▲               
+                                                      │                │                       │               
+                                                      │                │                       │               
+                                                      │                └──────────n────────────┤               
+                                                      │                                     │               
+                                                      │                                     │               
+                                                      │                                     │               
+                                               ┌──────┴───────┐                             │               
+                                               │   pizzas     │                             │               
+                                               │              │                             │               
+                                               │ idP (PK)     │                             │               
+                                               │ nomP         │                             │               
+                                               │ pate         │                             │               
+                                               │ prixBaseP    │                             │               
+                                               └──────────────┘                             │               
+                                                                                              │               
+                                                                                              │               
+                                                                                              │               
+                                                                                        ┌─────┴───────┐       
+                                                                                        │ pizza_      │       
+                                                                                        │             │       
+                                                                                        │ pizza_id (FK)│       
+                                                                                        │ ingredient_id│       
+                                                                                        └─────────────┘       
