@@ -34,11 +34,11 @@ public class Pizza{
 	}
 
 	private double calculerPrixFinal() {
-		double prixFinal = 0;
+		double prixIngredient = 0;
 		for (Ingredient ingr : this.ingredients) {
-			prixFinal += ingr.getPrixI();
+			prixIngredient += ingr.getPrixI();
 		}
-		return prixFinal;
+		return prixIngredient + this.prixBaseP;
 	}
 
 	public Pizza() {
