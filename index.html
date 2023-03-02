@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API PIZZALAND</title>
+</head>
+
+<body>
+    <center>
+
+        <style>
+            table {
+                border: 1px solid black;
+                margin: 10px;
+                text-align: center;
+            }
+
+            tr {
+                border: 1px solid black;
+                margin: 10px;
+                text-align: center;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            tr td {
+                border: 1px solid black;
+                padding: 10px;
+            }
+        </style>
+
+        <h1>Utilisation de l'API REST de la pizzeria PIZZALAND</h1>
+
+        <table>
+            <tr>
+                <td colspan="3" bgcolor="ffffcc">INGREDIENTS</td>
+            </tr>
+            <tr>
+                <td rowspan="3">GET</td>
+                <td>/ingredients</td>
+                <td>retourne la liste de la collection</td>
+            </tr>
+            <tr>
+                <td>/ingredients/{id}</td>
+                <td>retourne l'ingredient identifié</td>
+            </tr>
+            <tr>
+                <td>/ingredients/{id}/name</td>
+                <td>retourne le nom de l'ingredient identifié</td>
+            </tr>
+            <tr>
+                <td rowspan="1">POST</td>
+                <td>/ingredients</td>
+                <td>ajoute un ingredient</td>
+            </tr>
+            <tr>
+                <td rowspan="1">DELETE</td>
+                <td>/ingredients/{id}</td>
+                <td>supprime un ingredient</td>
+            </tr>
+        </table>
+
+
+        <table>
+            <tr>
+                <td colspan="3" bgcolor="ffffcc">PIZZAS</td>
+            </tr>
+            <tr>
+                <td rowspan="3">GET</td>
+                <td>/pizzas</td>
+                <td>retourne la liste de la collection</td>
+            </tr>
+            <tr>
+                <td>/pizzas/{id}</td>
+                <td>retourne la pizza identifié</td>
+            </tr>
+            <tr>
+                <td>/pizzas/{id}/prixfinal</td>
+                <td>retourne le prix final de la pizza identifié</td>
+            </tr>
+            <tr>
+                <td rowspan="2">POST</td>
+                <td>/pizzas</td>
+                <td>ajoute une pizza</td>
+            </tr>
+            <tr>
+                <td>/pizzas/{id}</td>
+                <td>ajoute un ingredient à la pizza identifié</td>
+            </tr>
+            <tr>
+                <td rowspan="2">DELETE</td>
+                <td>/pizzas/{id}</td>
+                <td>supprime la pizza identifié</td>
+            </tr>
+            <tr>
+                <td>/pizzas/{id}/{idingredient}</td>
+                <td>supprime l'ingredient de la pizza identifé</td>
+            </tr>
+            <tr>
+                <td rowspan="1">PATCH</td>
+                <td>/pizzas/{id}</td>
+                <td>modifie l'attribut de la pizza identifié</td>
+            </tr>
+        </table>
+
+
+
+        <table>
+            <tr>
+                <td colspan="3" bgcolor="ffffcc">COMMANDES</td>
+            </tr>
+            <tr>
+                <td rowspan="3">GET</td>
+                <td>/commandes</td>
+                <td>retourne la liste de la collection</td>
+            </tr>
+            <tr>
+                <td>/commandes/{id}</td>
+                <td>retourne la commande identifié</td>
+            </tr>
+            <tr>
+                <td>/commandes/{id}/prixfinal</td>
+                <td>retourne le prix final de la commande identifié</td>
+            </tr>
+            <tr>
+                <td rowspan="1">POST</td>
+                <td>/commandes</td>
+                <td>ajoute une commande</td>
+            </tr>
+        </table>
+
+    </center>
+
+</body>
+
+</html>

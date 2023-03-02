@@ -39,7 +39,7 @@ public class CommandeRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			if(parts.length == 3) {
-				if(parts[2].equals("prixfinalcommande")) {
+				if(parts[2].equals("prixfinal")) {
 					try {
 						jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)).getPrixFinalC());
 					}catch (Exception e) {
