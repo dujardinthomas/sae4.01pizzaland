@@ -86,6 +86,13 @@ public class Pizza_IngredientsDAO {
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
+
+	@Override
+	public String toString() {
+		return "Pizza_IngredientsDAO [ds=" + ds + ", con=" + con + ", ingrDAO=" + ingrDAO + "]";
+	}
+	
+	
 	
 
 }

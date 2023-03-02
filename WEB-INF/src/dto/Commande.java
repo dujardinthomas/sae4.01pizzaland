@@ -61,4 +61,11 @@ public class Commande {
 		this.pizzas = pizzas;
 	}
 
+	@Override
+	public String toString() {
+		return "Commande [idCo=" + idCo + ", client_id=" + client_id + ", date=" + date + ", pizzas=" + pizzas + "]";
+	}
+	
+	
+
 }

@@ -46,4 +46,10 @@ public class Client {
 		this.adresseC = adresseC;
 	}
 
+	@Override
+	public String toString() {
+		return "Client [idC=" + idC + ", nomC=" + nomC + ", adresseC=" + adresseC + "]";
+	}
+
+	
 }

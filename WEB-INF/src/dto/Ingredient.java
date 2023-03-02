@@ -51,5 +51,12 @@ public class Ingredient {
 	public void setPrixI(double prixI) {
 		this.prixI = prixI;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Ingredient [idI=" + idI + ", nameI=" + nameI + ", prixI=" + prixI + "]";
+	}
+	
 	
 }

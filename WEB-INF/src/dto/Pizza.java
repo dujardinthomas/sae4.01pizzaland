@@ -28,8 +28,9 @@ public class Pizza{
 		this.nomP = nomP;
 		this.pate = pate;
 		this.prixBaseP = prixBaseP;
-		this.prixFinalP = calculerPrixFinal();
 		this.ingredients = ingredients;
+		this.prixFinalP = calculerPrixFinal();
+		
 	}
 
 	private double calculerPrixFinal() {
@@ -90,4 +91,12 @@ public class Pizza{
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
+
+	@Override
+	public String toString() {
+		return "Pizza [idP=" + idP + ", nomP=" + nomP + ", pate=" + pate + ", prixBaseP=" + prixBaseP + ", prixFinalP="
+				+ prixFinalP + ", ingredients=" + ingredients + "]";
+	}
+	
+	
 }
