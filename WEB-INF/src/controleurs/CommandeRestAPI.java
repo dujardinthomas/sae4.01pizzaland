@@ -38,16 +38,58 @@ public class CommandeRestAPI extends HttpServlet {
 		else{
 			String[] parts = info.split("/");
 			String param1 = parts[1];
-			try {
-				jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)));
-			}catch (Exception e) {
-				res.sendError(404, " cet objet n'existe pas !");
+			if(parts.length == 3) {
+				if(parts[2].equals("prixfinalcommande")) {
+					try {
+						jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)).getPrixFinalC());
+					}catch (Exception e) {
+						res.sendError(404, " cet objet n'existe pas !");
+					}
+				}
+				else {
+					jsonString = null;	
+				}
+			}
+			else {
+				try {
+					jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
 			}
 		}
 		out.println(jsonString);
 		out.close();
 	}
 
+//	@Override
+//	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+//		res.setContentType("application/json;charset=UTF-8");
+//		PrintWriter out = res.getWriter();
+//		ObjectMapper objectMapper = new ObjectMapper();
+//
+//		String info = req.getPathInfo();
+//		String jsonString = null;
+//		if(info == null || info.equals("/")) {
+//			try {
+//				jsonString = objectMapper.writeValueAsString(commandeDAO.getAllCommandes());
+//			} catch (JsonProcessingException | SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}	
+//		}
+//		else{
+//			String[] parts = info.split("/");
+//			String param1 = parts[1];
+//			try {
+//				jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)));
+//			}catch (Exception e) {
+//				res.sendError(404, " cet objet n'existe pas !");
+//			}
+//		}
+//		out.println(jsonString);
+//		out.close();
+//	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

@@ -43,6 +43,16 @@ public class Commande {
 	public int getIdCo() {
 		return idCo;
 	}
+	
+	
+
+	public double getPrixFinalC() {
+		return prixFinalC;
+	}
+
+	public void setPrixFinalC(double prixFinalC) {
+		this.prixFinalC = prixFinalC;
+	}
 
 	public void setIdCo(int idCo) {
 		this.idCo = idCo;

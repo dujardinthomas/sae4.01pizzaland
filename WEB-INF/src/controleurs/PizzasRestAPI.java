@@ -28,7 +28,6 @@ public class PizzasRestAPI extends HttpServlet {
 		String info = req.getPathInfo();
 		String jsonString = "hellooo";
 		if(info == null || info.equals("/")) {
-
 			try {
 				jsonString = objectMapper.writeValueAsString(pizzDAO.findAll());
 			} catch (JsonProcessingException | SQLException e) {
@@ -40,7 +39,7 @@ public class PizzasRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			String param1 = parts[1];
 			if(parts.length == 3) {
-				if(parts[2].equals("name")) {
+				if(parts[2].equals("prixfinal")) {
 					try {
 						jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(param1)).getPrixFinalP());
 					}catch (Exception e) {
