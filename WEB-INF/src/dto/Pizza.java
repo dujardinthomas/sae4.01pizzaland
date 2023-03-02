@@ -18,7 +18,6 @@ public class Pizza{
 	@JsonProperty
 	private double prixBaseP;
 
-	@JsonProperty
 	private double prixFinalP;
 
 	@JsonProperty
@@ -29,7 +28,7 @@ public class Pizza{
 		this.nomP = nomP;
 		this.pate = pate;
 		this.prixBaseP = prixBaseP;
-		//this.prixFinalP = calculerPrixFinal();
+		this.prixFinalP = calculerPrixFinal();
 		this.ingredients = ingredients;
 	}
 

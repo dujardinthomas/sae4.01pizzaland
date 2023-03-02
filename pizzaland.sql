@@ -44,8 +44,8 @@ CREATE TABLE pizza_ingredients (
     ingredient_id INT,
     -- complexifie la chose quantite varchar(10),
     PRIMARY KEY (pizza_id, ingredient_id),
-    FOREIGN KEY (pizza_id) REFERENCES pizzas(idP),
-    FOREIGN KEY (ingredient_id) REFERENCES ingredients(idI)
+    FOREIGN KEY (pizza_id) REFERENCES pizzas(idP) on delete cascade,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(idI) on delete cascade
 );
 
 -- POUR LA PIZZA 4 FROMAGES ON AOUTE TOUT LES INGRE UN PAR UN
@@ -84,8 +84,8 @@ INSERT INTO clients values (2, 'Simon', 'Lille');
 create table commandes (
     idCo int PRIMARY KEY,
     client_id int,
-    date date,
-    FOREIGN KEY (client_id) REFERENCES clients(idC)
+    dateCo date,
+    FOREIGN KEY (client_id) REFERENCES clients(idC) on delete cascade
 );
 
 INSERT INTO commandes values (1, 1, '2023-02-18');
