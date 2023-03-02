@@ -18,15 +18,26 @@ public class Commande {
 
 	@JsonProperty
 	private List<Pizza> pizzas;
+	
+	private double prixFinalC;
 
 	public Commande(int idCo, int client_id, Date date, List<Pizza> pizzas) {
 		this.idCo = idCo;
 		this.client_id = client_id;
 		this.date = date;
 		this.pizzas = pizzas;
+		this.prixFinalC = calculerPrixFinal();
 	}
 
 	public Commande() {
+	}
+	
+	private double calculerPrixFinal() {
+		double prixPizzas = 0;
+		for (Pizza pizza : this.pizzas) {
+			prixPizzas += pizza.getPrixFinalP();
+		}
+		return prixPizzas;
 	}
 
 	public int getIdCo() {
