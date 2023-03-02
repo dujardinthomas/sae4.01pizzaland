@@ -116,6 +116,7 @@ public class IngredientRestAPI extends HttpServlet {
 		}
 		else {
 			out.println(jsonString);
+			out.println("supprimé !");
 		}
 		out.close();
 	}

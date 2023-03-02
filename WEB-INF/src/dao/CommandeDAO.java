@@ -26,7 +26,7 @@ public class CommandeDAO {
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setInt(1, c.getIdCo());
 			ps.setInt(2, c.getClient_id());
-			ps.setDate(3, c.getDate());
+			ps.setString(3, c.getDateC());
 			if(ps.executeUpdate() != 0){
 				res = true;
 			}
@@ -43,7 +43,7 @@ public class CommandeDAO {
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
 				int idC = rs.getInt("idCo");
-				commandes.add(new Commande(idC, rs.getInt("client_id"), rs.getDate("date"), commande_pizzDAO.getCommandePizza(idC)));
+				commandes.add(new Commande(idC, rs.getInt("client_id"), rs.getString("date"), commande_pizzDAO.getCommandePizza(idC)));
 			}
 			return commandes;
 		}
@@ -56,7 +56,7 @@ public class CommandeDAO {
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
 				int idC = rs.getInt("idCo");
-				c = new Commande(idC, rs.getInt("client_id"), rs.getDate("date"), commande_pizzDAO.getCommandePizza(idC));
+				c = new Commande(idC, rs.getInt("client_id"), rs.getString("date"), commande_pizzDAO.getCommandePizza(idC));
 			}
 			return c;
 		}

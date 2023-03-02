@@ -14,17 +14,17 @@ public class Commande {
 	private int client_id;
 	
 	@JsonProperty
-	private Date date;
+	private String dateC;
 
 	@JsonProperty
 	private List<Pizza> pizzas;
 	
 	private double prixFinalC;
 
-	public Commande(int idCo, int client_id, Date date, List<Pizza> pizzas) {
+	public Commande(int idCo, int client_id, String dateC, List<Pizza> pizzas) {
 		this.idCo = idCo;
 		this.client_id = client_id;
-		this.date = date;
+		this.dateC = dateC;
 		this.pizzas = pizzas;
 		this.prixFinalC = calculerPrixFinal();
 	}
@@ -66,12 +66,12 @@ public class Commande {
 		this.client_id = client_id;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getDateC() {
+		return dateC;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateC(String date) {
+		this.dateC = date;
 	}
 
 	public List<Pizza> getPizzas() {
@@ -84,7 +84,7 @@ public class Commande {
 
 	@Override
 	public String toString() {
-		return "Commande [idCo=" + idCo + ", client_id=" + client_id + ", date=" + date + ", pizzas=" + pizzas + "]";
+		return "Commande [idCo=" + idCo + ", client_id=" + client_id + ", dateC=" + dateC + ", pizzas=" + pizzas + "]";
 	}
 	
 	

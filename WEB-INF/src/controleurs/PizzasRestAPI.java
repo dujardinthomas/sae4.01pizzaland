@@ -109,8 +109,13 @@ public class PizzasRestAPI extends HttpServlet {
 				res.sendError(404, " cet objet n'existe pas !");
 			}
 		}
-		out.println(jsonString);
-		out.println("supprimé !");
+		if(jsonString.equals("false")) {
+			res.sendError(404, " cet objet ne peux pas être supprimé !");
+		}
+		else {
+			out.println(jsonString);
+			out.println("supprimé !");
+		}
 		out.close();
 	}
 }
