@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PizzaDAO;
+import dao.UsersDAO;
 import dto.Pizza;
 
 @WebServlet("/pizzas/*")
@@ -65,6 +66,11 @@ public class PizzasRestAPI extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String authorization = req.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+            res.sendError(403);
+            return;
+        }
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
@@ -91,6 +97,11 @@ public class PizzasRestAPI extends HttpServlet {
 
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String authorization = req.getHeader("Authorization");
+        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+            res.sendError(403);
+            return;
+        }
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		ObjectMapper objectMapper = new ObjectMapper();

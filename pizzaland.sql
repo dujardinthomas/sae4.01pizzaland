@@ -6,6 +6,7 @@ DROP TABLE pizza_ingredients;
 DROP TABLE pizzas;
 DROP TABLE ingredients;
 
+DROP TABLE users;
 
 CREATE TABLE ingredients(
     idI int PRIMARY KEY, 
@@ -105,3 +106,12 @@ INSERT INTO commande_pizza VALUES (1, 1);
 
  -- POUR LA COMMANDE DE SIMON
 INSERT INTO commande_pizza VALUES (2, 2);
+
+create table users (
+	user_id INT,
+	login varchar(20),
+	pwd varchar(20)
+);
+
+INSERT INTO users values (1,'simon','simon');
+INSERT INTO users values (2,'thomas','thomas');
