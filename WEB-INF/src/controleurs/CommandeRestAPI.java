@@ -32,17 +32,22 @@ public class CommandeRestAPI extends HttpServlet {
 			try {
 				jsonString = objectMapper.writeValueAsString(commandeDAO.getAllCommandes());
 			} catch (JsonProcessingException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 		}
 		else{
 			String[] parts = info.split("/");
-			String param1 = parts[1];
-			if(parts.length == 3) {
+			if(parts.length == 2) {
+				try {
+					jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(parts[1])));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
+			else if(parts.length == 3) {
 				if(parts[2].equals("prixfinal")) {
 					try {
-						jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)).getPrixFinalC());
+						jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(parts[1])).getPrixFinalC());
 					}catch (Exception e) {
 						res.sendError(404, " cet objet n'existe pas !");
 					}
@@ -52,11 +57,7 @@ public class CommandeRestAPI extends HttpServlet {
 				}
 			}
 			else {
-				try {
-					jsonString = objectMapper.writeValueAsString(commandeDAO.getCommandeByIdCo(Integer.valueOf(param1)));
-				}catch (Exception e) {
-					res.sendError(404, " cet objet n'existe pas !");
-				}
+				jsonString = null;	
 			}
 		}
 		out.println(jsonString);
@@ -66,10 +67,10 @@ public class CommandeRestAPI extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
@@ -97,10 +98,10 @@ public class CommandeRestAPI extends HttpServlet {
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		ObjectMapper objectMapper = new ObjectMapper();

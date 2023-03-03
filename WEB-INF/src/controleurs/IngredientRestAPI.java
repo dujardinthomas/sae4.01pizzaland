@@ -34,17 +34,22 @@ public class IngredientRestAPI extends HttpServlet {
 			try {
 				jsonString = objectMapper.writeValueAsString(ingrDAO.findAll());
 			} catch (JsonProcessingException | SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 		}
 		else{
 			String[] parts = info.split("/");
-			String param1 = parts[1];
-			if(parts.length == 3) {
+			if(parts.length == 2) {
+				try {
+					jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(parts[1])));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
+			else if(parts.length == 3) {
 				if(parts[2].equals("name")) {
 					try {
-						jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(param1)).getNameI());
+						jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(parts[1])).getNameI());
 					}catch (Exception e) {
 						res.sendError(404, " cet objet n'existe pas !");
 					}
@@ -54,11 +59,7 @@ public class IngredientRestAPI extends HttpServlet {
 				}
 			}
 			else {
-				try {
-					jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(param1)));
-				}catch (Exception e) {
-					res.sendError(404, " cet objet n'existe pas !");
-				}
+				jsonString = null;	
 			}
 		}
 		out.println(jsonString);
@@ -69,10 +70,10 @@ public class IngredientRestAPI extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
@@ -100,10 +101,10 @@ public class IngredientRestAPI extends HttpServlet {
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		ObjectMapper objectMapper = new ObjectMapper();

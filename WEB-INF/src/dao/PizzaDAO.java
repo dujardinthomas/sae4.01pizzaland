@@ -25,13 +25,19 @@ public class PizzaDAO {
 		//	Statement stmt = con.createStatement();
 		String query = "insert into pizzas values (?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(query);
-		ps.setInt(1, p.getIdP());
+		int idP = p.getIdP();
+		ps.setInt(1, idP);
 		ps.setString(2, p.getNomP());
 		ps.setString(3, p.getPate());
 		ps.setDouble(4, p.getPrixBaseP());
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
+		
+		for(int i=0; i<p.getIngredients().size(); i++) {
+			pizza_ingrDAO.createIngredientsPizza(idP, p.getIngredients().get(i).getIdI());
+		}
+		
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
@@ -85,7 +91,6 @@ public class PizzaDAO {
 	}
 
 	
-
 	///////////////////////////////////////////////////////////////
 	////////////////// UPDATE ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
@@ -93,7 +98,6 @@ public class PizzaDAO {
 	public boolean updatePizza(String nomColonne, String newValeur, Pizza pizz) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-		//	Statement stmt = con.createStatement();
 		String query = "update pizzas set ? = ? where ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, nomColonne);
@@ -114,7 +118,6 @@ public class PizzaDAO {
 	public boolean deletePizza(Pizza pizz) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-		//	Statement stmt = con.createStatement();
 		String query = "delete from pizzas where idP = ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, pizz.getIdP());
@@ -128,7 +131,6 @@ public class PizzaDAO {
 	public boolean deletePizzaByIdP(int number) throws SQLException {
 		boolean res=false;
 		con = ds.getConnection();
-		//	Statement stmt = con.createStatement();
 		String query = "delete from pizzas where idP = ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, number);

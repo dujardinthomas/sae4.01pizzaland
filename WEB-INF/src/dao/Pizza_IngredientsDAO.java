@@ -73,27 +73,19 @@ public class Pizza_IngredientsDAO {
 	}
 
 	
-	public boolean deleteIngredientsPizza(int pizza_id) throws SQLException{
+	public boolean deleteIngredientsPizza(int pizza_id, int ingredient_id) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
-		//	Statement stmt = con.createStatement();
-		String query = "delete from pizza_ingredients where pizza_id = ?";
+		String query = "delete from pizza_ingredients where pizza_id = ? and ingredient_id = ?";
 		PreparedStatement ps = con.prepareStatement(query);
 		ps.setInt(1, pizza_id);
+		ps.setInt(2, ingredient_id);
 		if(ps.executeUpdate() != 0){
 			res = true;
 		}
 		try {con.close();} catch(Exception e2) {}
 		return res;
 	}
-
-	@Override
-	public String toString() {
-		return "Pizza_IngredientsDAO [ds=" + ds + ", con=" + con + ", ingrDAO=" + ingrDAO + "]";
-	}
-	
-	
-	
 
 }
 

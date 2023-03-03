@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.PizzaDAO;
+import dao.Pizza_IngredientsDAO;
 import dao.UsersDAO;
+import dto.Ingredient;
 import dto.Pizza;
 
 @WebServlet("/pizzas/*")
@@ -38,11 +40,17 @@ public class PizzasRestAPI extends HttpServlet {
 		}
 		else{
 			String[] parts = info.split("/");
-			String param1 = parts[1];
-			if(parts.length == 3) {
+			if(parts.length == 2) {
+				try {
+					jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(parts[1])));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
+			else if(parts.length == 3) {
 				if(parts[2].equals("prixfinal")) {
 					try {
-						jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(param1)).getPrixFinalP());
+						jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(parts[1])).getPrixFinalP());
 					}catch (Exception e) {
 						res.sendError(404, " cet objet n'existe pas !");
 					}
@@ -52,11 +60,7 @@ public class PizzasRestAPI extends HttpServlet {
 				}
 			}
 			else {
-				try {
-					jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(param1)));
-				}catch (Exception e) {
-					res.sendError(404, " cet objet n'existe pas !");
-				}
+				jsonString = null;
 			}
 		}
 		out.println(jsonString);
@@ -67,10 +71,10 @@ public class PizzasRestAPI extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
@@ -81,13 +85,30 @@ public class PizzasRestAPI extends HttpServlet {
 			data.append(line);
 		}
 
-		ObjectMapper mapper = new ObjectMapper();
-		Pizza newPizza = mapper.readValue(data.toString(), Pizza.class);
-		try {
-			pizzDAO.createPizza(newPizza);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		String info = req.getPathInfo();
+		if(info == null || info.equals("/")) {
+			ObjectMapper mapper = new ObjectMapper();
+			Pizza newPizza = mapper.readValue(data.toString(), Pizza.class);
+			try {
+				pizzDAO.createPizza(newPizza);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			String[] parts = info.split("/");
+			if(parts.length == 2) {
+				try {
+					ObjectMapper objectMapper = new ObjectMapper();
+					Ingredient ingredient = objectMapper.readValue(data.toString(), Ingredient.class);
+
+					Pizza_IngredientsDAO pizzIngrDAO = new Pizza_IngredientsDAO();
+					pizzIngrDAO.createIngredientsPizza(Integer.parseInt(parts[1]), ingredient.getIdI());
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
 		}
 		out.println(data.toString());
 	}
@@ -98,29 +119,50 @@ public class PizzasRestAPI extends HttpServlet {
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String authorization = req.getHeader("Authorization");
-        if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
-            res.sendError(403);
-            return;
-        }
+		if (authorization == null || !authorization.startsWith("Bearer ") || !UsersDAO.verifierUtilisateur(authorization)){
+			res.sendError(403);
+			return;
+		}
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		String info = req.getPathInfo();
 		String jsonString = null;
-		if(info == null) {
+		if(info == null || info.equals("/")) {
 			res.sendError(404, "indiquer un numero pour supprimer");
 		}
 		else{
 			String[] parts = info.split("/");
-			String param1 = parts[1];
-			try {
-				jsonString = objectMapper.writeValueAsString(pizzDAO.deletePizzaByIdP(Integer.valueOf(param1)));
-			}catch (Exception e) {
-				res.sendError(404, " cet objet n'existe pas !");
+			if(parts.length == 2) {
+				try {
+					jsonString = objectMapper.writeValueAsString(pizzDAO.deletePizzaByIdP(Integer.valueOf(parts[1])));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
+			else if(parts.length == 3) {
+				StringBuilder data = new StringBuilder();
+				BufferedReader reader = req.getReader();
+				String line;
+				while ((line = reader.readLine()) != null) {
+					data.append(line);
+				}
+				try {
+					ObjectMapper mapper = new ObjectMapper();
+					Ingredient ingredient = mapper.readValue(data.toString(), Ingredient.class);
+
+					Pizza_IngredientsDAO pizzIngrDAO = new Pizza_IngredientsDAO();
+					System.out.println(pizzIngrDAO.deleteIngredientsPizza(Integer.parseInt(parts[1]), ingredient.getIdI()));
+				}catch (Exception e) {
+					res.sendError(404, " cet objet n'existe pas !");
+				}
+			}
+			else {
+				jsonString = null;
 			}
 		}
-		if(jsonString.equals("false")) {
+		if(jsonString == null || jsonString.equals("false")) {
 			res.sendError(404, " cet objet ne peux pas être supprimé !");
 		}
 		else {
