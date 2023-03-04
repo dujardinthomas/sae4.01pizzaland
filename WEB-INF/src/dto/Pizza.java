@@ -56,6 +56,10 @@ public class Pizza{
 		return nomP;
 	}
 
+	public static void main(String[] args) {
+		System.out.println("vhvhjvhjf rtfdjxnb");
+	}
+
 	public void setNomP(String nomP) {
 		this.nomP = nomP;
 	}

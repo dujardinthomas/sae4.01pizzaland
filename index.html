@@ -132,7 +132,15 @@
                 <td>/commandes</td>
                 <td>ajoute une commande</td>
             </tr>
+            <tr>
+                <td rowspan="1">DELETE</td>
+                <td>/commandes/{id}</td>
+                <td>supprimer une commande</td>
+            </tr>
         </table>
+
+        Pour ajouter ou modifier un élément, il est necessaire d'obtenir un jeton d'autentification dit token JwtManager à l'adresse /users/token?login={VOTRE LOGIN}&pwd={VOTRE MOT DE PASSE}
+        Puis de l'ajouter au header de la requete avec comme titre de parametre : Authorization
 
     </center>
 

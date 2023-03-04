@@ -1,0 +1,103 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": "RESTED REST Client",
+    "Comment": "An exported collection from RESTED",
+    "entries": [
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/pizzaland/ingredients/12",
+          "headers": [
+            {
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0",
+              "name": "Authorization"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/pizzaland/ingredients/",
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "idI",
+                "value": "12"
+              },
+              {
+                "name": "nameI",
+                "value": "tomate"
+              },
+              {
+                "name": "prixI",
+                "value": "1"
+              }
+            ],
+            "text": "idI=12&nameI=tomate&prixI=1"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/ingredients/1/name",
+          "headers": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/ingredients/1",
+          "headers": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/ingredients/",
+          "headers": [
+            {
+              "name": "",
+              "value": ""
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      }
+    ]
+  }
+}

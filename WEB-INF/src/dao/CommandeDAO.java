@@ -1,10 +1,6 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +20,22 @@ public class CommandeDAO {
 			con = ds.getConnection();
 			String query = "insert into commandes values (?,?,?)";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, c.getIdCo());
+			int idCo = c.getIdCo();
+			ps.setInt(1, idCo);
 			ps.setInt(2, c.getClient_id());
-			ps.setString(3, c.getDateC());
+			ps.setDate(3, Date.valueOf(c.getDateC()));
 			if(ps.executeUpdate() != 0){
 				res = true;
 			}
+			System.out.println("commande ajouté !!");
+			if(!(c.getPizzas() == null)){
+				for(int i=0; i<c.getPizzas().size(); i++){
+					res = commande_pizzDAO.createCommandePizza(idCo, c.getPizzas().get(i).getIdP());
+					System.out.println("commande pizza ajouté !!");
+				}
+			}
+
+			System.out.println("commande entierement finit !!! youpi ");
 			try {con.close();} catch(Exception e2) {}
 			return res;
 		}
@@ -43,7 +49,7 @@ public class CommandeDAO {
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
 				int idC = rs.getInt("idCo");
-				commandes.add(new Commande(idC, rs.getInt("client_id"), rs.getString("dateco"), commande_pizzDAO.getCommandePizza(idC)));
+				commandes.add(new Commande(idC, rs.getInt("client_id"), rs.getString("dateco"), commande_pizzDAO.getAllCommandePizza(idC)));
 			}
 			return commandes;
 		}
@@ -56,7 +62,7 @@ public class CommandeDAO {
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
 				int idC = rs.getInt("idCo");
-				c = new Commande(idC, rs.getInt("client_id"), rs.getString("dateco"), commande_pizzDAO.getCommandePizza(idC));
+				c = new Commande(idC, rs.getInt("client_id"), rs.getString("dateco"), commande_pizzDAO.getAllCommandePizza(idC));
 			}
 			return c;
 		}
@@ -86,6 +92,9 @@ public class CommandeDAO {
 			if(ps.executeUpdate() != 0){
 				res = true;
 			}
+			commande_pizzDAO.deleteCommandePizza(idCo);
+			System.out.println("commande pizza supprimé !!");
+			System.out.println("commande entierement supprimé !!! youpi ");
 			try {con.close();} catch(Exception e2) {}
 			return res;
 		}

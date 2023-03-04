@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.Ingredient;
-import dto.Pizza;
 
 public class Pizza_IngredientsDAO {
 
@@ -24,7 +23,7 @@ public class Pizza_IngredientsDAO {
  * UPDATE
  * DELETE
  */
-	public boolean createIngredientsPizza(int pizza_id, int ingredient_id ) throws SQLException{
+	public boolean createPizzaIngredient(int pizza_id, int ingredient_id ) throws SQLException{
 		boolean res = false; //on cree un boolean pour pouvoir fermer la connexion
 		con = ds.getConnection();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -41,21 +40,21 @@ public class Pizza_IngredientsDAO {
 		return res;
 	}
 	
-	public List<Ingredient> getIngredientsPizza(int pizza_id) throws SQLException{
+	public List<Ingredient> getAllPizzaIngredient(int pizza_id) throws SQLException{
 		con = ds.getConnection();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 		Statement stmt = con.createStatement();
 		String query = "select * from pizza_ingredients where pizza_id=" + pizza_id;
 		ResultSet rs = stmt.executeQuery(query);
 		while(rs.next()){
-			ingredients.add(ingrDAO.findByIdI(rs.getInt("ingredient_id")));
+			ingredients.add(ingrDAO.getIngredientByIdI(rs.getInt("ingredient_id")));
 		}
 		return ingredients;
 
 	}
 	
 	
-	public boolean updateIngredientsPizza(int pizza_id, int colonne1, int colonne2 ) throws SQLException{
+	public boolean updatePizzaIngredient(int pizza_id, int colonne1, int colonne2 ) throws SQLException{
 		boolean res = false; //on cree un boolean pour pouvoir fermer la connexion
 		con = ds.getConnection();
 		List<Ingredient> ingredients = new ArrayList<Ingredient>();
@@ -73,7 +72,7 @@ public class Pizza_IngredientsDAO {
 	}
 
 	
-	public boolean deleteIngredientsPizza(int pizza_id, int ingredient_id) throws SQLException{
+	public boolean deletePizzaIngredient(int pizza_id, int ingredient_id) throws SQLException{
 		boolean res=false;
 		con = ds.getConnection();
 		String query = "delete from pizza_ingredients where pizza_id = ? and ingredient_id = ?";

@@ -32,7 +32,7 @@ public class PizzasRestAPI extends HttpServlet {
 		String jsonString = "hellooo";
 		if(info == null || info.equals("/")) {
 			try {
-				jsonString = objectMapper.writeValueAsString(pizzDAO.findAll());
+				jsonString = objectMapper.writeValueAsString(pizzDAO.getAllPizzas());
 			} catch (JsonProcessingException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -42,7 +42,7 @@ public class PizzasRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			if(parts.length == 2) {
 				try {
-					jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(parts[1])));
+					jsonString = objectMapper.writeValueAsString(pizzDAO.getPizzaByIdP(Integer.valueOf(parts[1])));
 				}catch (Exception e) {
 					res.sendError(404, " cet objet n'existe pas !");
 				}
@@ -50,7 +50,7 @@ public class PizzasRestAPI extends HttpServlet {
 			else if(parts.length == 3) {
 				if(parts[2].equals("prixfinal")) {
 					try {
-						jsonString = objectMapper.writeValueAsString(pizzDAO.findByIdP(Integer.valueOf(parts[1])).getPrixFinalP());
+						jsonString = objectMapper.writeValueAsString(pizzDAO.getPizzaByIdP(Integer.valueOf(parts[1])).getPrixFinalP());
 					}catch (Exception e) {
 						res.sendError(404, " cet objet n'existe pas !");
 					}
@@ -78,6 +78,7 @@ public class PizzasRestAPI extends HttpServlet {
 		res.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = res.getWriter();
 
+
 		StringBuilder data = new StringBuilder();
 		BufferedReader reader = req.getReader();
 		String line;
@@ -87,28 +88,33 @@ public class PizzasRestAPI extends HttpServlet {
 
 
 		String info = req.getPathInfo();
+		boolean result = false;
 		if(info == null || info.equals("/")) {
 			ObjectMapper mapper = new ObjectMapper();
 			Pizza newPizza = mapper.readValue(data.toString(), Pizza.class);
 			try {
-				pizzDAO.createPizza(newPizza);
+				result = pizzDAO.createPizza(newPizza);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		else{
 			String[] parts = info.split("/");
-			if(parts.length == 2) {
+			//if(parts.length == 2) {
 				try {
 					ObjectMapper objectMapper = new ObjectMapper();
 					Ingredient ingredient = objectMapper.readValue(data.toString(), Ingredient.class);
-
+					System.out.println("on ajoute " + ingredient + " a la pizza " + parts[1]);
 					Pizza_IngredientsDAO pizzIngrDAO = new Pizza_IngredientsDAO();
-					pizzIngrDAO.createIngredientsPizza(Integer.parseInt(parts[1]), ingredient.getIdI());
+					result = pizzIngrDAO.createPizzaIngredient(Integer.parseInt(parts[1]), ingredient.getIdI());
 				}catch (Exception e) {
 					res.sendError(404, " cet objet n'existe pas !");
 				}
-			}
+		//	}
+
+		}
+		if(!result) {
+			res.sendError(404, " cet objet ne peux pas être crée !");
 		}
 		out.println(data.toString());
 	}
@@ -129,6 +135,7 @@ public class PizzasRestAPI extends HttpServlet {
 
 		String info = req.getPathInfo();
 		String jsonString = null;
+		boolean result = false;
 		if(info == null || info.equals("/")) {
 			res.sendError(404, "indiquer un numero pour supprimer");
 		}
@@ -141,6 +148,7 @@ public class PizzasRestAPI extends HttpServlet {
 					res.sendError(404, " cet objet n'existe pas !");
 				}
 			}
+
 			else if(parts.length == 3) {
 				StringBuilder data = new StringBuilder();
 				BufferedReader reader = req.getReader();
@@ -149,11 +157,13 @@ public class PizzasRestAPI extends HttpServlet {
 					data.append(line);
 				}
 				try {
-					ObjectMapper mapper = new ObjectMapper();
-					Ingredient ingredient = mapper.readValue(data.toString(), Ingredient.class);
+					//ObjectMapper mapper = new ObjectMapper();
+					//Ingredient ingredient = mapper.readValue(data.toString(), Ingredient.class);
 
 					Pizza_IngredientsDAO pizzIngrDAO = new Pizza_IngredientsDAO();
-					System.out.println(pizzIngrDAO.deleteIngredientsPizza(Integer.parseInt(parts[1]), ingredient.getIdI()));
+
+					result = pizzIngrDAO.deletePizzaIngredient(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+					System.out.println("on supprime ingre " + result);
 				}catch (Exception e) {
 					res.sendError(404, " cet objet n'existe pas !");
 				}
@@ -162,7 +172,7 @@ public class PizzasRestAPI extends HttpServlet {
 				jsonString = null;
 			}
 		}
-		if(jsonString == null || jsonString.equals("false")) {
+		if((jsonString == null || jsonString.equals("false")) && !result) {
 			res.sendError(404, " cet objet ne peux pas être supprimé !");
 		}
 		else {

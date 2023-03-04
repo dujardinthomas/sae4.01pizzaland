@@ -97,12 +97,13 @@ create table commande_pizza (
     commande_id INT,
     pizza_id INT,
     PRIMARY KEY (commande_id, pizza_id),
-    FOREIGN KEY (commande_id) REFERENCES commandes(idCo),
-    FOREIGN KEY (pizza_id) REFERENCES pizzas(idP)
+    FOREIGN KEY (commande_id) REFERENCES commandes(idCo) on delete cascade,
+    FOREIGN KEY (pizza_id) REFERENCES pizzas(idP) on delete cascade
 );
 
  -- POUR LA COMMANDE DE THOMAS
 INSERT INTO commande_pizza VALUES (1, 1);
+INSERT INTO commande_pizza VALUES (1, 3);
 
  -- POUR LA COMMANDE DE SIMON
 INSERT INTO commande_pizza VALUES (2, 2);

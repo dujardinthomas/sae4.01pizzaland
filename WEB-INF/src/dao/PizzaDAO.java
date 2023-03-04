@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.Ingredient;
 import dto.Pizza;
 
 public class PizzaDAO {
@@ -35,7 +34,7 @@ public class PizzaDAO {
 		}
 		
 		for(int i=0; i<p.getIngredients().size(); i++) {
-			pizza_ingrDAO.createIngredientsPizza(idP, p.getIngredients().get(i).getIdI());
+			pizza_ingrDAO.createPizzaIngredient(idP, p.getIngredients().get(i).getIdI());
 		}
 		
 		try {con.close();} catch(Exception e2) {}
@@ -46,7 +45,7 @@ public class PizzaDAO {
 	////////////////// READ ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
 
-	public List<Pizza> findAll() throws SQLException{
+	public List<Pizza> getAllPizzas() throws SQLException{
 		con = ds.getConnection();
 		List<Pizza> pizzaAll = new ArrayList<Pizza>();
 		Statement stmt = con.createStatement();
@@ -57,7 +56,7 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixBaseP = rs.getDouble("prixBaseP");
-			pizzaAll.add(new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getIngredientsPizza(idP)));
+			pizzaAll.add(new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getAllPizzaIngredient(idP)));
 		}
 		try {con.close();} catch(Exception e2) {}
 		System.out.println(pizzaAll);
@@ -74,18 +73,18 @@ public class PizzaDAO {
 			String nomP = rs.getString("nomP");
 			String pate = rs.getString("pate");
 			double prixBaseP = rs.getDouble("prixBaseP");
-			pizz = new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getIngredientsPizza(idP));
+			pizz = new Pizza(idP, nomP, pate, prixBaseP, pizza_ingrDAO.getAllPizzaIngredient(idP));
 		}
 		try {con.close();} catch(Exception e2) {}
 		return pizz;
 	}
 	
-	public Pizza findByIdP(int idP) throws SQLException{
+	public Pizza getPizzaByIdP(int idP) throws SQLException{
 		String query = "select * from pizzas where idP="+idP;
 		return select(query);
 	}
 
-	public Pizza findByNomP(String nomP) throws SQLException{
+	public Pizza getPizzaByNomP(String nomP) throws SQLException{
 		String query = "select * from pizzas where nomP='" + nomP+"'";
 		return select(query);
 	}

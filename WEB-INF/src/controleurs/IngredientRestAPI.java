@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.IngredientDAO;
 import dao.UsersDAO;
 import dto.Ingredient;
-import dto.Pizza;
 
 @WebServlet("/ingredients/*")
 public class IngredientRestAPI extends HttpServlet {
@@ -33,7 +32,7 @@ public class IngredientRestAPI extends HttpServlet {
 		String jsonString = null;
 		if(info == null || info.equals("/")) {
 			try {
-				jsonString = objectMapper.writeValueAsString(ingrDAO.findAll());
+				jsonString = objectMapper.writeValueAsString(ingrDAO.getAllIngredients());
 			} catch (JsonProcessingException | SQLException e) {
 				e.printStackTrace();
 			}	
@@ -42,7 +41,7 @@ public class IngredientRestAPI extends HttpServlet {
 			String[] parts = info.split("/");
 			if(parts.length == 2) {
 				try {
-					jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(parts[1])));
+					jsonString = objectMapper.writeValueAsString(ingrDAO.getIngredientByIdI(Integer.valueOf(parts[1])));
 				}catch (Exception e) {
 					res.sendError(404, " cet objet n'existe pas !");
 				}
@@ -50,7 +49,7 @@ public class IngredientRestAPI extends HttpServlet {
 			else if(parts.length == 3) {
 				if(parts[2].equals("name")) {
 					try {
-						jsonString = objectMapper.writeValueAsString(ingrDAO.findByIdI(Integer.valueOf(parts[1])).getNameI());
+						jsonString = objectMapper.writeValueAsString(ingrDAO.getIngredientByIdI(Integer.valueOf(parts[1])).getNameI());
 					}catch (Exception e) {
 						res.sendError(404, " cet objet n'existe pas !");
 					}

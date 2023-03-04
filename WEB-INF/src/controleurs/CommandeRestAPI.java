@@ -81,13 +81,17 @@ public class CommandeRestAPI extends HttpServlet {
 			data.append(line);
 		}
 
+		boolean result = false;
 		ObjectMapper mapper = new ObjectMapper();
 		Commande newCommande = mapper.readValue(data.toString(), Commande.class);
 		try {
-			commandeDAO.createCommande(newCommande);
+			result = commandeDAO.createCommande(newCommande);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if(!result) {
+			res.sendError(404, " cet objet ne peux pas être crée !");
 		}
 		out.println(data.toString());
 	}

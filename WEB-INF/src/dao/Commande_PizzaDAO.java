@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.Ingredient;
 import dto.Pizza;
 
 public class Commande_PizzaDAO {
@@ -39,14 +38,14 @@ public class Commande_PizzaDAO {
 		return res;
 	}
 	
-	public List<Pizza> getCommandePizza(int commande_id) throws SQLException{
+	public List<Pizza> getAllCommandePizza(int commande_id) throws SQLException{
 		con = ds.getConnection();
 		List<Pizza> pizzas = new ArrayList<Pizza>();
 		Statement stmt = con.createStatement();
 		String query = "select * from commande_pizza where commande_id=" + commande_id;
 		ResultSet rs = stmt.executeQuery(query);
 		while(rs.next()){
-			pizzas.add(pizzDAO.findByIdP(rs.getInt("pizza_id")));
+			pizzas.add(pizzDAO.getPizzaByIdP(rs.getInt("pizza_id")));
 		}
 		return pizzas;
 

@@ -1,0 +1,142 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": "RESTED REST Client",
+    "Comment": "An exported collection from RESTED",
+    "entries": [
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/pizzaland/pizzas/4/9",
+          "headers": [
+            {
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0",
+              "name": "Authorization"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/pizzaland/pizzas/4",
+          "headers": [
+            {
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0",
+              "name": "Authorization"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "idI",
+                "value": "9"
+              },
+              {
+                "name": "nameI",
+                "value": "cheddar"
+              },
+              {
+                "name": "prixI",
+                "value": "1"
+              }
+            ],
+            "text": "idI=9&nameI=cheddar&prixI=1"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "DELETE",
+          "url": "http://localhost:8080/pizzaland/pizzas/4",
+          "headers": [
+            {
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0",
+              "name": "Authorization"
+            }
+          ],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "http://localhost:8080/pizzaland/pizzas",
+          "headers": [
+            {
+              "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYmVhMTI2MTRiYTI0MDliOTQxMWIxM2Q5NjY3ODE5NiIsImlhdCI6MTY3Nzk1NjIyNywic3ViIjoiU2VjcmV0SldUIiwiaXNzIjoidGhvbWFzIiwiZXhwIjoxNjc3OTU2NDY3fQ.Vcf8MaOxWA_th9F6_VgtwuEfspnWjhbVD9Alid4zJe0",
+              "name": "Authorization"
+            }
+          ],
+          "postData": {
+            "mimeType": "application/x-www-form-urlencoded",
+            "params": [
+              {
+                "name": "idP",
+                "value": "4"
+              },
+              {
+                "name": "nomP",
+                "value": "kebab"
+              },
+              {
+                "name": "pate",
+                "value": "standard"
+              },
+              {
+                "name": "prixBaseP",
+                "value": "9"
+              },
+              {
+                "name": "ingredients",
+                "value": "[{\"idI\":7, \"nameI\":\"mozzarella\", \"prixI\":1}, {\"idI\":3, \"nameI\":\"poulet\", \"prixI\":1}]"
+              }
+            ],
+            "text": "idP=4&nomP=kebab&pate=standard&prixBaseP=9&ingredients=[{\"idI\":7, \"nameI\":\"mozzarella\", \"prixI\":1}, {\"idI\":3, \"nameI\":\"poulet\", \"prixI\":1}]"
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/pizzas/1/prixfinal",
+          "headers": [],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/pizzas/1",
+          "headers": [],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "http://localhost:8080/pizzaland/pizzas",
+          "headers": [],
+          "postData": {
+            "mimeType": "",
+            "params": []
+          }
+        }
+      }
+    ]
+  }
+}

@@ -38,7 +38,7 @@ public class IngredientDAO {
 	////////////////// READ ///////////////////////////////////////
 	///////////////////////////////////////////////////////////////
 
-	public List<Ingredient> findAll() throws SQLException{
+	public List<Ingredient> getAllIngredients() throws SQLException{
 		con = ds.getConnection();
 		List<Ingredient> ingrAll = new ArrayList<Ingredient>();
 		Statement stmt = con.createStatement();
@@ -55,12 +55,12 @@ public class IngredientDAO {
 		return ingrAll;
 	}
 
-	public Ingredient findByIdI(int id) throws SQLException{
+	public Ingredient getIngredientByIdI(int id) throws SQLException{
 		String query = "select * from ingredients where idI="+id;
 		return select(query);
 	}
 
-	public Ingredient findByNameI(String nom) throws SQLException{
+	public Ingredient getIngredientByNameI(String nom) throws SQLException{
 		String query = "select * from ingredients where nameI='" + nom+"'";
 		return select(query);
 	}
