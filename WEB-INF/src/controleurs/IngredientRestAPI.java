@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.IngredientDAO;
 import dao.UsersDAO;
 import dto.Ingredient;
+import dto.Pizza;
 
 @WebServlet("/ingredients/*")
 public class IngredientRestAPI extends HttpServlet {
@@ -84,13 +85,19 @@ public class IngredientRestAPI extends HttpServlet {
 			data.append(line);
 		}
 
-		ObjectMapper mapper = new ObjectMapper();
-		Ingredient newIngredient = mapper.readValue(data.toString(), Ingredient.class);
-		try {
-			ingrDAO.createIngredient(newIngredient);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String info = req.getPathInfo();
+		boolean result = false;
+		if(info == null || info.equals("/")) {
+			ObjectMapper mapper = new ObjectMapper();
+			Ingredient newIngredient = mapper.readValue(data.toString(), Ingredient.class);
+			try {
+				 result = ingrDAO.createIngredient(newIngredient);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(result == false) {
+			res.sendError(404, " cet objet ne peux pas être crée !");
 		}
 		out.println(data.toString());
 	}
